@@ -1,0 +1,18 @@
+{
+  "sectors": "Sektorlar",
+  "standards": "Standardlar",
+  "organizations": "Tashkilotlar",
+  "about": "Biz haqimizda",
+  "blog": "Blog",
+  "apply": "Ariza qoldirish",
+
+  "title1": "ISO: Xalqaro standartlashtirish tashkiloti",
+  "title2": "Standartlar biz uchun nima qilishi mumkin?",
+  "description1": "Xalqaro standartlar mamlakatlar o'rtasidagi mahsulot va xizmatlarning muvofiqligini ta'minlaydi, bu esa savdo va hamkorlikni osonlashtiradi, sifat va xavfsizlik standartlarini belgilashga yordam beradi, bu orqali iste'molchilar sifatli va xavfsiz mahsulotlar olish imkoniyatiga ega bo'ladi, global bozor raqobatida ustunlikka ega bo'lishadi, chunki ular har xil mamlakatlarda qabul qilingan talablarni qondira olishadi. Xalqaro standartlar yangi texnologiyalarni qabul qilish va kengaytirishni qo'llab-quvvatlaydi, bu esa innovatsiyalar va tadqiqot jarayonlarini tezlashtiradi, ular yordamida kompaniyalar ijtimoiy mas'uliyat va ekologik barqarorlikni oshirish maqsadida ishlashlari mumkin. Bu omillar xalqaro miqyosda hamkorlik va iqtisodiy o'sishni qo'llab-quvvatlashda muhim rol o'ynaydi.",
+  "description2": "ISO (International Organization for Standardization) - bu xalqaro miqyosda standartlashtirishni amalga oshiruvchi tashkilot bo'lib, uning maqsadi turli sohalarda sifat va samaradorlikni oshirishdir. ISO tashkiloti turli sohalarda standartlar ishlab chiqadi, ularning ichida sifat, xavfsizlik, va ekologik masalalar ham mavjud.  ISO a'zolari dunyoning turli mamlakatlaridan kelgan ekspertlar bo'lib, ular standartlarni ishlab chiqishda o'z tajribalarini baham ko'radilar. ISO standartlariga muvofiq sertifikatlar berish orqali, kompaniyalar o'z mahsulotlarining sifatini va xavfsizligini tasdiqlash imkoniyatiga ega bo'lishadi. ISO standartlari iste'molchilarni xavf-xatarlardan himoya qilishga yordam beradi, chunki ular sifat, xavfsizlik va xavfsizligi bo'yicha belgilangan mezonlarga asoslangan va yangi texnologiyalarni qabul qilishni va innovatsiyalarni rag'batlantiradi, bu esa iqtisodiy o'sish va rivojlanishga yordam beradi. ISO standartlari, ular qabul qilinishi va amalga oshirilishi orqali, sanoat va biznes jarayonlarini yanada takomillashtirishda muhim rol o'ynaydi.",
+  
+  "allStandards": "Barcha standartlar",
+  "allBlogs": "Barcha bloglar",
+  "allSectors": "Barcha sektorlar",
+  "search": "Qidiruv"
+}

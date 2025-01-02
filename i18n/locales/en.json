@@ -1,0 +1,18 @@
+{
+  "sectors": "Sectors",
+  "standards": "Standards",
+  "organizations": "Organizations",
+  "about": "About Us",
+  "blog": "Blog",
+  "apply": "Submit Application",
+
+  "title1": "ISO – International Organization for Standardization",
+  "title2": "What can Standards do for us?",
+  "description1": "International standards ensure the compatibility of products and services between countries, which facilitates trade and cooperation, help set quality and safety standards, through which consumers have the opportunity to receive quality and safe products, gain an advantage in global market competition, as they can meet the requirements adopted in different countries. International standards support the adoption and expansion of new technologies, which accelerates innovation and research processes, with the help of which companies can work towards increasing social responsibility and environmental sustainability. These factors play an important role in supporting international cooperation and economic growth.",
+  "description2": "ISO (International Organization for Standardization) is an international standardization organization whose goal is to improve quality and efficiency in various fields. ISO develops standards in various fields, including quality, safety, and environmental issues. ISO members are experts from around the world who share their expertise in developing standards. By issuing certificates in accordance with ISO standards, companies are able to confirm the quality and safety of their products. ISO standards help protect consumers from risks because they are based on established criteria for quality, safety, and security, and they encourage the adoption of new technologies and innovation, which contributes to economic growth and development. ISO standards, through their adoption and implementation, play an important role in further improving industrial and business processes.",
+
+  "allStandards": "All standards",
+  "allBlogs": "All blogs",
+  "allSectors": "All sectors",
+  "search": "Search"
+}
