@@ -6,7 +6,7 @@
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div class="flex flex-col gap-2" v-if="!isAdmin">
             <VField name="password" rules="required" v-model="form.password">
-              <Label for="password"> Hozirgi parol </Label>
+              <UiLabel for="password"> Hozirgi parol </UiLabel>
               <div class="relative">
                 <UiInput v-model="form.password" id="password" :type="passwordField ? 'text' : 'password'" placeholder="Parolni kiriting" class="pr-10" :error="errors.password" />
                 <span class="absolute inset-y-0 end-0 flex cursor-pointer items-center justify-center px-4" @click="passwordSee">
@@ -59,7 +59,7 @@
           <div v-if="!isAdmin"></div>
           <div class="flex flex-col gap-2">
             <VField name="newPassword" rules="required" v-model="form.newPassword">
-              <Label for="newPassword"> Yangi parol </Label>
+              <UiLabel for="newPassword"> Yangi parol </UiLabel>
               <div class="relative">
                 <UiInput v-model="form.newPassword" id="newPassword" :type="newPasswordField ? 'text' : 'password'" placeholder="Yangi parolni kiriting" class="pr-10" :error="errors.newPassword" />
                 <span class="absolute inset-y-0 end-0 flex cursor-pointer items-center justify-center px-4" @click="newPasswordSee">
@@ -111,7 +111,7 @@
           </div>
           <div class="flex flex-col gap-2">
             <VField name="newConfirmPassword" rules="required|confirmed:@newPassword" v-model="form.newConfirmPassword">
-              <Label for="newConfirmPassword"> Yangi parolni takrorlang </Label>
+              <UiLabel for="newConfirmPassword"> Yangi parolni takrorlang </UiLabel>
               <div class="relative">
                 <UiInput
                   v-model="form.newConfirmPassword"

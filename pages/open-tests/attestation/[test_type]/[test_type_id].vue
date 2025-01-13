@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-auto mt-10 w-full rounded-lg bg-card p-4 shadow-md ">
+  <div class="mx-auto mt-10 w-full rounded-lg bg-card p-4 shadow-md">
     <VForm @submit="handleSubmitForm" v-slot="{ errors }">
       <div class="grid grid-cols-2 gap-4 sm:gap-6">
         <div class="grid gap-2">
@@ -26,7 +26,7 @@
               <UiSelectTrigger placeholder="Test tilini tanlang" />
               <UiSelectContent>
                 <UiSelectLabel>Tillardan birini tanlang</UiSelectLabel>
-                 <UiSelectSeparator />
+                <UiSelectSeparator />
                 <UiSelectGroup>
                   <UiSelectItem v-for="item in languages" :key="item.id" :value="item.value" :disabled="!item.status">
                     {{ item.name }}
@@ -43,7 +43,7 @@
               <UiSelectTrigger placeholder="Attestatsiya turini tanlang" />
               <UiSelectContent>
                 <UiSelectLabel>Attestatsiya turini belgilang</UiSelectLabel>
-                 <UiSelectSeparator />
+                <UiSelectSeparator />
                 <UiSelectGroup>
                   <UiSelectItem v-for="item in certificationTypes" :key="item.value" :value="item.value">
                     {{ item.name }}
@@ -60,7 +60,7 @@
               <UiSelectTrigger placeholder="Amaldagi toifangizni tanlang" />
               <UiSelectContent>
                 <UiSelectLabel>Amaldagi toifangizni belgilang</UiSelectLabel>
-                 <UiSelectSeparator />
+                <UiSelectSeparator />
                 <UiSelectGroup>
                   <UiSelectItem v-for="item in qualificationLevels" :key="item.value" :value="item.value">
                     {{ item.name }}
@@ -113,6 +113,7 @@
         const redirectUrl = `/active-test/${route.params.test_type}/${response.data._id}`;
         router.push(redirectUrl);
         showToast("Test muvaffaqiyatli boshlandi!", "success");
+        sideCannonConfetti();
       }
     } catch (error) {
       console.log(error);

@@ -79,6 +79,32 @@ export const debounce = (key, fn, timeout = 500) => {
   return sTimeout(key, fn, timeout);
 };
 
+export const sideCannonConfetti = () => {
+  const colors = ["#bb0000", "#0000ee"];
+  const end = Date.now() + 5 * 1000;
+  function frame() {
+    useConfetti({
+      particleCount: 2,
+      angle: 60,
+      spread: 55,
+      origin: { x: 0 },
+      colors: colors,
+    });
+    useConfetti({
+      particleCount: 2,
+      angle: 120,
+      spread: 55,
+      origin: { x: 1 },
+      colors: colors,
+    });
+
+    if (Date.now() < end) {
+      requestAnimationFrame(frame);
+    }
+  }
+  requestAnimationFrame(frame);
+};
+
 // data
 
 export const roles = {

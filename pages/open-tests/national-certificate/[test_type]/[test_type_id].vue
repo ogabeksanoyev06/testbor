@@ -74,6 +74,7 @@
         const redirectUrl = `/active-test/${route.params.test_type}/${response.data._id}`;
         router.push(redirectUrl);
         showToast("Test muvaffaqiyatli boshlandi!", "success");
+        sideCannonConfetti();
       }
     } catch (error) {
       showToast(error.response.data.message, "info");

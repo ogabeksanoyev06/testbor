@@ -113,25 +113,25 @@
               <div class="flex flex-col gap-4">
                 <div class="grid gap-2">
                   <VField name="name" rules="required" v-model="form.name">
-                    <Label for="name">Ism</Label>
+                    <UiLabel for="name">Ism</UiLabel>
                     <UiInput v-model="form.name" id="name" type="text" placeholder="Ism" :error="errors.name" />
                   </VField>
                 </div>
                 <div class="grid gap-2">
                   <VField name="surname" rules="required" v-model="form.surname">
-                    <Label for="surname">Familiya</Label>
+                    <UiLabel for="surname">Familiya</UiLabel>
                     <UiInput v-model="form.surname" id="surname" type="text" placeholder="Familiya" :error="errors.surname" />
                   </VField>
                 </div>
                 <div class="grid gap-2">
                   <VField name="father_name" rules="required" v-model="form.father_name">
-                    <Label for="father_name">Otasining ismi</Label>
+                    <UiLabel for="father_name">Otasining ismi</UiLabel>
                     <UiInput v-model="form.father_name" id="father_name" type="text" placeholder="Otasining ismi" :error="errors.father_name" />
                   </VField>
                 </div>
                 <div class="grid gap-2">
                   <VField name="phone" rules="required" v-model="form.phone_number">
-                    <Label for="phone">Telefon raqam</Label>
+                    <UiLabel for="phone">Telefon raqam</UiLabel>
                     <div class="relative">
                       <span class="absolute inset-y-0 start-0 flex items-center justify-center px-2"> +998 </span>
                       <UiInput v-model="form.phone_number" v-maska="'#########'" id="phone" type="text" placeholder="Telefon raqam" class="pl-12 focus:pl-12" :error="errors.phone" />

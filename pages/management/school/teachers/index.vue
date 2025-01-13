@@ -36,7 +36,7 @@
               <NuxtLink :to="{ path: '/management/profile/teacher', query: { userId: item._id } }" class="text-primary">{{ item.login }} </NuxtLink>
             </UiTableCell>
             <UiTableCell class="" disabled>
-              <NuxtLink  class="text-primary">Ko'rish </NuxtLink>
+              <NuxtLink :to="{ path: '/management/test-attempt-results/teacher', query: { userId: item._id } }" class="text-primary">Ko'rish </NuxtLink>
               <!-- :to="`/profile-manage/${item._id}`" -->
             </UiTableCell>
             <UiTableCell class="flex gap-2">

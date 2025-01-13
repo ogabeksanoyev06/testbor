@@ -2,6 +2,10 @@ import { useApi } from "@/composables/useApi";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
+
+
+
+
 export const useTestStore = defineStore("test", () => {
   const api = useApi();
 
@@ -88,7 +92,6 @@ export const useTestStore = defineStore("test", () => {
       const apiPath = userRoleApiPath[role];
       const url = `${apiPath}/get-test/${test_type}/${test_id}`;
       const response = await api.post(url);
-
       if (response.data.status === "success") {
         const testData = response.data?.data;
         await getTime();
@@ -97,44 +100,51 @@ export const useTestStore = defineStore("test", () => {
         testTimer.value = Math.floor(startedAt + duration * 60 - times.value);
         let blogs = [];
         if (testData?.main_test?.length > 0) {
-          blogs.push({
-            science: testData?.subject,
-            test_type: "main",
-            questions: testData?.main_test,
-          });
+          if (testData?.test_type_id?.test_type === "dtm") {
+            if (testData?.third_test?.length > 0) {
+              const questions = testData.main_test;
+              blogs.push({
+                science: {
+                  name_uz: "Ona tili (majburiy)",
+                },
+                test_type: "main",
+                questions: questions.slice(0, 10),
+              });
+              blogs.push({
+                science: {
+                  name_uz: "Matematika (majburiy)",
+                },
+                test_type: "main",
+                questions: questions.slice(10, 20),
+              });
+              blogs.push({
+                science: {
+                  name_uz: "O'zbekiston tarixi (majburiy)",
+                },
+                test_type: "main",
+                questions: questions.slice(20, 30),
+              });
+            }
+          } else {
+            blogs.push({
+              science: testData?.subject,
+              test_type: "main",
+              questions: testData?.main_test,
+            });
+          }
         }
         if (testData?.secondary_test?.length > 0) {
           blogs.push({
-            science: testData?.subject_2,
+            science: testData?.subject,
             test_type: "secondary",
             questions: testData.secondary_test,
           });
         }
         if (testData?.third_test?.length > 0) {
-          const questions = testData.third_test;
-
           blogs.push({
-            science: {
-              name_uz: "Ona tili (majburiy)",
-            },
+            science: testData?.subject_2,
             test_type: "third",
-            questions: questions.slice(0, 10),
-          });
-
-          blogs.push({
-            science: {
-              name_uz: "Matematika (majburiy)",
-            },
-            test_type: "third",
-            questions: questions.slice(10, 20),
-          });
-
-          blogs.push({
-            science: {
-              name_uz: "O'zbekiston tarixi (majburiy)",
-            },
-            test_type: "third",
-            questions: questions.slice(20, 30),
+            questions: testData.third_test,
           });
         }
 
@@ -233,41 +243,44 @@ export const useTestStore = defineStore("test", () => {
 
       let results = [];
 
-      results.push({
-        science: testData?.subject,
-        questions: testData?.main_test,
-      });
-
       if (testData.secondary_test?.length > 0) {
         results.push({
-          science: testData?.subject_2,
+          science: testData?.subject,
           test_type: "secondary",
-          questions: testData.secondary_test,
+          questions: testData?.secondary_test,
         });
       }
+
       if (testData.third_test?.length > 0) {
+        results.push({
+          science: testData?.subject_2,
+          test_type: "thrid",
+          questions: testData.third_test,
+        });
+      }
+      if (testData.main_test?.length > 0) {
         results.push({
           science: {
             name_uz: "Ona tili (majburiy)",
           },
-          test_type: "third",
-          questions: testData.third_test.slice(0, 10),
+          test_type: "main",
+          questions: testData.main_test.slice(0, 10),
         });
 
         results.push({
           science: {
             name_uz: "Matematika (majburiy)",
           },
-          test_type: "third",
-          questions: testData.third_test.slice(10, 20),
+          test_type: "main",
+          questions: testData.main_test.slice(10, 20),
         });
 
         results.push({
           science: {
             name_uz: "O'zbekiston tarixi (majburiy)",
           },
-          test_type: "third",
-          questions: testData.third_test.slice(20, 30),
+          test_type: "main",
+          questions: testData.main_test.slice(20, 30),
         });
       }
       result.value = {

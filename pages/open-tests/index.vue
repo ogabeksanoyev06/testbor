@@ -1,11 +1,11 @@
 <template>
   <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-    <div v-for="type in types?.data" class="transition-300 group relative flex h-full flex-col overflow-hidden rounded-lg bg-card shadow-md hover:shadow-sm">
+    <div v-for="(type, i) in types?.data" class="transition-300 group relative flex h-full flex-col overflow-hidden rounded-lg bg-card p-2 shadow-md hover:shadow-sm">
       <div class="aspect-[252/200] h-[200px] shrink-0">
-        <UiImage src="https://keenthemes.com/static/metronic/tailwind/dist/assets/media/images/600x400/1.jpg" class="h-full w-full object-cover object-top" />
+        <UiImage src="https://keenthemes.com/static/metronic/tailwind/dist/assets/media/images/600x400/1.jpg" class="h-full w-full rounded-lg object-cover object-top" />
       </div>
       <div class="flex h-full flex-col gap-3 rounded-xl p-2 sm:p-4">
-        <p class="transition-300 text-xl font-semibold group-hover:text-primary ">
+        <p class="transition-300 text-xl font-semibold">
           {{ type.title_uz }}
         </p>
         <div class="mt-auto grid gap-4">

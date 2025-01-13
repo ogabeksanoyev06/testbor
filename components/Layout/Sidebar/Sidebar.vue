@@ -1,6 +1,6 @@
 <template>
   <aside class="sticky top-0 hidden h-screen border-r px-4 lg:block">
-    <UiScrollArea class="relative h-screen overflow-hidden py-6 pr-4">
+    <UiScrollArea class="relative h-screen overflow-hidden py-6">
       <NuxtLink to="/">
         <span>
           <svg width="131" height="22" viewBox="0 0 116 20" xmlns="http://www.w3.org/2000/svg">
@@ -20,7 +20,7 @@
           v-for="(item, index) in filteredMenuItems"
           :key="index"
           :to="item.route"
-          class="transition-300 group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-muted"
+          class="transition-300 group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-muted [&.router-link-active>span]:text-primary [&.router-link-active]:bg-muted"
         >
           <span :class="`${item.icon} text-xl !leading-5 group-hover:text-primary`"></span>
           {{ item.label }}
@@ -50,9 +50,8 @@
             </UiCollapsibleTrigger>
           </div>
           <UiCollapsibleContent class="pl-10">
-            <NuxtLink to="/" class="transition-300 group flex items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-muted"> O'quvchilarga </NuxtLink>
-            <NuxtLink to="/" class="transition-300 group flex items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-muted"> O'qituvchilarga </NuxtLink>
-            <NuxtLink to="/" class="transition-300 group flex items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-muted"> Abiturientlarga </NuxtLink>
+            <NuxtLink to="/reports/school/pupils" class="transition-300 group flex items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-muted"> O'quvchilarga </NuxtLink>
+            <NuxtLink to="/reports/school/teachers" class="transition-300 group flex items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-muted"> O'qituvchilarga </NuxtLink>
           </UiCollapsibleContent>
         </UiCollapsible>
         <UiCollapsible v-if="userRole === 'school'" v-model:open="openTest">
@@ -80,8 +79,8 @@
             </UiCollapsibleTrigger>
           </div>
           <UiCollapsibleContent class="pl-10">
-            <NuxtLink to="/" class="transition-300 group flex items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-muted"> O'quvchilarga </NuxtLink>
-            <NuxtLink to="/" class="transition-300 group flex items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-muted"> Abiturientlarga </NuxtLink>
+            <NuxtLink to="/reports/school/pupils" class="transition-300 group flex items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-muted"> O'quvchilarga </NuxtLink>
+            <NuxtLink to="/reports/school/teachers" class="transition-300 group flex items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-muted"> Abiturientlarga </NuxtLink>
           </UiCollapsibleContent>
         </UiCollapsible>
       </nav>

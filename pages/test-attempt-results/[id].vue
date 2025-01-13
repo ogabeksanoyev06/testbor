@@ -1,26 +1,29 @@
 <template>
-  <div class="grid gap-6 pb-10">
+  <div class="grid gap-5 pb-10">
     <section class="">
+      <!-- {{ result.test_type_title }} -->
       <div class="flex flex-wrap items-center justify-center gap-6">
-        <div class="w-full rounded-full border border-primary bg-background text-center" style="max-width: 250px; font-size: xx-large">
+        <div class="relative w-full rounded-full border bg-background text-center" style="max-width: 250px; font-size: xx-large">
           <span>{{ result.correct_answers }}</span>
-          <span style="font-size: large">/{{ result.questions_count }}</span>
+          <span style="font-size: large" class="text-primary">/{{ result.questions_count }}</span>
         </div>
         <div class="ms-2 w-full border border-primary bg-background text-center" style="max-width: 250px; font-size: xx-large">{{ timerFormat(duration) }}</div>
       </div>
     </section>
-    <section class="">
-      <h2 class="mx-auto mb-4 max-w-[600px] text-center text-xl font-medium">Sinov yakunlandi. Hurmatli foydalanuvchi siz natijangiz bilan tanishib chiqishingiz mumkin.</h2>
-      <div class="overflow-x-auto rounded-xl border">
+    <section class="grid gap-6">
+      <!-- <h2 class="mx-auto max-w-[900px] text-center text-xl font-medium">Sinov yakunlandi. Hurmatli foydalanuvchi siz natijangiz bilan tanishib chiqishingiz mumkin.</h2> -->
+      <!-- user info -->
+      <div class="overflow-x-auto border">
         <UiTable class="text-center font-medium">
           <UiTableHeader>
             <UiTableRow>
-              <UiTableHead class="border-r text-center font-semibold">Hudud nomi</UiTableHead>
-              <UiTableHead class="border-r text-center font-semibold">Tuman (shahar) nomi</UiTableHead>
-              <UiTableHead class="border-r text-center font-semibold">Maktab</UiTableHead>
-              <UiTableHead class="border-r text-center font-semibold" v-if="userRole !== 'teacher'">Sinf</UiTableHead>
-              <UiTableHead class="border-r text-center font-semibold">Test boshlanish vaqti</UiTableHead>
-              <UiTableHead class="border-r text-center font-semibold">Test tugatish vaqti</UiTableHead>
+              <UiTableHead class="border-r text-center">Hudud nomi</UiTableHead>
+              <UiTableHead class="border-r text-center">Tuman (shahar) nomi</UiTableHead>
+              <UiTableHead class="border-r text-center">Maktab</UiTableHead>
+              <UiTableHead class="border-r text-center" v-if="userRole !== 'teacher'">Sinf</UiTableHead>
+              <UiTableHead class="border-r text-center">Test turi</UiTableHead>
+              <UiTableHead class="border-r text-center">Test boshlanish vaqti</UiTableHead>
+              <UiTableHead class="border-r text-center">Test tugatish vaqti</UiTableHead>
             </UiTableRow>
           </UiTableHeader>
           <UiTableBody>
@@ -29,19 +32,20 @@
               <UiTableCell class="border-r py-3">{{ user.district }} </UiTableCell>
               <UiTableCell class="border-r py-3">{{ user.school }} </UiTableCell>
               <UiTableCell class="border-r py-3" v-if="userRole !== 'teacher'">{{ user.class }} </UiTableCell>
+              <UiTableCell class="border-r py-3">{{ result.test_type_title }}</UiTableCell>
               <UiTableCell class="border-r py-3">{{ $dayjs(result.startedAt).format("DD.MM.YYYY HH:mm:ss") }} </UiTableCell>
               <UiTableCell class="border-r py-3">{{ $dayjs(result.endedAt).format("DD.MM.YYYY HH:mm:ss") }} </UiTableCell>
             </UiTableRow>
           </UiTableBody>
         </UiTable>
       </div>
-
-      <div class="mt-6 overflow-x-auto rounded-xl border" v-if="result.test_type === 'attestation'">
+      <!-- attestasiya tashxix -->
+      <div class="overflow-x-auto border" v-if="result.test_type === 'attestation'">
         <UiTable class="text-center font-medium">
           <UiTableHeader>
             <UiTableRow>
-              <UiTableHead class="border-r text-center font-semibold">Attestatsiya turi </UiTableHead>
-              <UiTableHead class="border-r text-center font-semibold">Amaldagi toifangiz</UiTableHead>
+              <UiTableHead class="border-r text-center">Attestatsiya turi </UiTableHead>
+              <UiTableHead class="border-r text-center">Amaldagi toifangiz</UiTableHead>
             </UiTableRow>
           </UiTableHeader>
           <UiTableBody>
@@ -52,12 +56,13 @@
           </UiTableBody>
         </UiTable>
       </div>
-      <div class="mt-6 overflow-x-auto rounded-xl border" v-if="result.test_type === 'national_certificate'">
+      <!-- sertifikat daraja -->
+      <div class="overflow-x-auto border" v-if="result.test_type === 'national_certificate'">
         <UiTable class="text-center font-medium">
           <UiTableHeader>
             <UiTableRow>
-              <UiTableHead class="border-r text-center font-semibold">Sizning natijangiz </UiTableHead>
-              <UiTableHead class="border-r text-center font-semibold">Daraja</UiTableHead>
+              <UiTableHead class="border-r text-center">Sizning natijangiz </UiTableHead>
+              <UiTableHead class="border-r text-center">Daraja</UiTableHead>
             </UiTableRow>
           </UiTableHeader>
           <UiTableBody>
@@ -69,41 +74,63 @@
         </UiTable>
       </div>
       <div v-if="result.test_type === 'attestation'">
-        <div class="mt-6 flex w-full flex-col items-center justify-center gap-2 rounded-xl border p-4 text-center">
-          <p class="text-xl font-bold text-primary">Tashxis</p>
+        <div class="mt-6 flex w-full flex-col items-center justify-center gap-2 border p-4 text-center">
+          <!-- <p class="text-xl font-bold text-primary">Tashxis</p> -->
           <p class="text-green-500" :class="{ 'text-red-500': result.correct_answers * 2 < 50 }">
             {{ getDiagnosis(result?.comments?.toifa, result.correct_answers * 2) }}
           </p>
         </div>
       </div>
+
+      <div class="overflow-x-auto border">
+        <UiTable class="text-center font-medium">
+          <UiTableHeader>
+            <UiTableRow>
+              <UiTableHead class="border-r text-center">Fan</UiTableHead>
+              <UiTableHead class="border-r text-center">Soni</UiTableHead>
+              <UiTableHead class="border-r text-center">To'g'rilar</UiTableHead>
+              <UiTableHead class="border-r text-center">Xatolar</UiTableHead>
+              <UiTableHead class="border-r text-center">Belgilanmagan</UiTableHead>
+              <UiTableHead class="border-r text-center">Ball</UiTableHead>
+            </UiTableRow>
+          </UiTableHeader>
+          <UiTableBody>
+            <UiTableRow v-for="(test, i) in result.results" class="odd:!bg-muted">
+              <UiTableCell class="border-r py-3">{{ test.science?.name_uz }} </UiTableCell>
+              <UiTableCell class="border-r py-3">{{ test.questions?.length }} </UiTableCell>
+              <UiTableCell class="border-r py-3">{{ calculateCorrectAnswers(test.questions) }} </UiTableCell>
+              <UiTableCell class="border-r py-3">{{ calculateIncorrectAnswers(test.questions) }} </UiTableCell>
+              <UiTableCell class="border-r py-3">{{ calculateUnselectedAnswers(test.questions) }} </UiTableCell>
+              <UiTableCell class="border-r py-3">36 </UiTableCell>
+            </UiTableRow>
+          </UiTableBody>
+        </UiTable>
+      </div>
     </section>
 
-    <section class="">
-      <div class="mb-6 hidden text-xl font-medium lg:block">Sizning javoblaringiz</div>
-      <div class="relative">
-        <div class="flex flex-col gap-4 sm:gap-6">
-          <div class="flex flex-col gap-2" v-for="(test, i) in result.results" :key="i">
-            <p class="text-base font-medium sm:text-xl">{{ test.science?.name_uz }}</p>
-            <div class="flex flex-wrap gap-2">
-              <ModalTestQuestionInfoModal v-for="(question, index) in test.questions" :key="index" :question="question">
-                <button
-                  class="transition-300 flex h-9 w-9 items-center justify-center rounded-xl font-medium opacity-100"
-                  :class="{
-                    '!bg-primary': isCorrect(question),
-                    '!bg-destructive': isSelectedIncorrect(question),
-                    '!bg-secondary': !isAnySelected(question),
-                  }"
-                >
-                  {{ index + 1 }}
-                </button>
-              </ModalTestQuestionInfoModal>
-            </div>
+    <div class="relative mt-6">
+      <h3 class="mb-4 font-semibold max-sm:text-center">
+        Test variant raqami<strong class="text-primary"> №{{ result._id }}</strong>
+      </h3>
+      <div class="flex flex-col gap-4 sm:gap-6">
+        <div class="grid gap-2" v-for="(test, i) in result.results" :key="i">
+          <p class="text-base font-semibold max-sm:text-center">{{ test.science?.name_uz }}</p>
+          <div class="flex flex-wrap gap-2 max-sm:justify-center">
+            <ModalTestQuestionInfoModal v-for="(question, index) in test.questions" :key="index" :question="question">
+              <UiButton class="h-[30px] w-[30px] shadow" :variant="isCorrect(question) ? 'default' : isSelectedIncorrect(question) ? 'destructive' : 'secondary'">
+                {{ index + 1 }}
+              </UiButton>
+            </ModalTestQuestionInfoModal>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+
     <NuxtLink :to="localePath('/test-attempt-results')" class="mx-auto w-full max-w-[300px]">
       <UiButton class="w-full"> Mening natijalarim </UiButton>
+    </NuxtLink>
+    <NuxtLink :to="localePath('/test-attempt-results')" class="mx-auto w-full max-w-[300px]" v-if="result.test_type === 'dtm'">
+      <UiButton class="w-full" variant="outline"> Solishtirish </UiButton>
     </NuxtLink>
   </div>
 </template>
@@ -232,6 +259,28 @@
     } else {
       return "F";
     }
+  };
+
+  // To'g'ri javoblar sonini hisoblash funksiyasi
+  const calculateCorrectAnswers = (questions) => {
+    return questions.reduce((count, question) => {
+      return count + question.options.filter((option) => option.is_correct && option.is_selected).length;
+    }, 0);
+  };
+
+  // Xato javoblar sonini hisoblash funksiyasi
+  const calculateIncorrectAnswers = (questions) => {
+    return questions.reduce((count, question) => {
+      return count + question.options.filter((option) => !option.is_correct && option.is_selected).length;
+    }, 0);
+  };
+
+  // Belgilanmagan javoblarni hisoblash
+  const calculateUnselectedAnswers = (questions) => {
+    return questions.reduce((count, question) => {
+      // Agar barcha javoblar tanlanmagan bo'lsa, 1 ga oshirish
+      return count + (question.options.every((option) => !option.is_selected) ? 1 : 0);
+    }, 0);
   };
 
   function isCorrect(question) {

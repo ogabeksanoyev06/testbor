@@ -16,7 +16,7 @@
         <UiTableBody>
           <UiTableRow v-for="(item, i) in data?.data" :key="i" class="odd:bg-muted">
             <UiTableCell class="font-medium">{{ i + 1 }} </UiTableCell>
-            <UiTableCell class="font-medium"> {{ item.theme?.name_uz }} </UiTableCell>
+            <UiTableCell class="font-medium"> {{ item.theme?.name_uz?.slice(0, item.theme?.name_uz.indexOf('.')) }} </UiTableCell>
             <UiTableCell> {{ item.total_questions }} </UiTableCell>
             <UiTableCell>{{ item.total_correct }} </UiTableCell>
             <UiTableCell> {{ item.total_incorrect }} </UiTableCell>

@@ -15,11 +15,10 @@
           </UiTableRow>
         </UiTableHeader>
         <UiTableBody>
-          <UiTableRow v-for="(item, i) in data.data" :key="i" class="font-medium odd:bg-muted">
+          <UiTableRow v-for="(item, i) in data.data" :key="i" class="odd:bg-muted">
             <UiTableCell>
               {{ getRowNumber(i) }}
             </UiTableCell>
-
             <UiTableCell>{{ $dayjs(item.startedAt).format("DD.MM.YYYY HH:mm:ss") }} - {{ $dayjs(item.endedAt).format("DD.MM.YYYY HH:mm:ss") }}</UiTableCell>
             <UiTableCell> {{ item.correct_answers }} </UiTableCell>
             <UiTableCell>{{ item.test_type_id?.title_uz }}</UiTableCell>
@@ -27,7 +26,7 @@
               <span v-if="item.status === 'in-progress'" class="text-red-500"> Yakunlanmagan </span>
               <span v-else-if="item.status === 'completed' || 'timed-out'" class="text-green-500"> Yakunlangan </span>
             </UiTableCell>
-            <UiTableCell>
+            <UiTableCell v-if="item.status !== 'in-progress'">
               <NuxtLink :to="localePath(`/test-attempt-results/${item._id}`)" class="flex items-center gap-1 text-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                   <path
@@ -38,6 +37,7 @@
                 Ko'rish
               </NuxtLink>
             </UiTableCell>
+            <UiTableCell v-if="item.status === 'in-progress'"> Jarayonda </UiTableCell>
           </UiTableRow>
         </UiTableBody>
       </UiTable>

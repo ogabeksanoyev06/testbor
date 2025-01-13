@@ -1,6 +1,6 @@
 <template>
-  <div class="h-full flex-1 bg-white">
-    <div class="sticky top-0 z-50 w-full bg-white py-2 lg:hidden">
+  <div class="h-full flex-1">
+    <div class="sticky top-0 z-50 w-full py-2 lg:hidden">
       <div class="flex items-center justify-between gap-4">
         <div class="flex items-center gap-1">
           <span class="shrink-0">
@@ -163,7 +163,7 @@
                   </UiButton>
                 </ModalTestCommentNotification>
               </div>
-              <p v-katex:auto>{{ question.question_text }}</p>
+              <div v-katex:auto v-html="question.question_text" />
             </div>
             <ul class="grid grid-cols-1 gap-3">
               <li
@@ -175,12 +175,11 @@
               >
                 <div class="flex flex-1 items-center gap-1">
                   <span class="font-bold">{{ answerLabels[i] }}.</span>
-                  {{ option.text }}
+                  <span v-html="option.text"></span>
                 </div>
                 <span class="loader" v-if="loading.is_selected && option._id === optionIds"></span>
               </li>
             </ul>
-
             <div class="mt-11 border border-dashed"></div>
           </div>
         </template>
@@ -212,6 +211,10 @@
 
   const timerInterval = ref(null);
   const loadingFinish = ref(false);
+
+  const renderText = (text) => {
+    return text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  };
 
   const isSelected = (options) => {
     return options.some((option) => option.is_selected);

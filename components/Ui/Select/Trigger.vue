@@ -1,7 +1,7 @@
 <template>
   <SelectTrigger :class="styles({ class: props.class })" v-bind="forwarded">
     <slot>
-      <UiSelectValue :placeholder="placeholder" />
+      <UiSelectValue :placeholder="placeholder" class="line-clamp-1" />
     </slot>
     <UiSelectIcon :icon="icon" />
   </SelectTrigger>

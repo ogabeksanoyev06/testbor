@@ -39,7 +39,7 @@
               <NuxtLink :to="{ path: localePath('/management/profile/pupil'), query: { userId: item._id } }" class="text-primary">{{ item.login }} </NuxtLink>
             </UiTableCell>
             <UiTableCell class="">
-              <NuxtLink to="/" class="text-primary">Ko'rish </NuxtLink>
+              <NuxtLink :to="{ path: '/management/test-attempt-results/pupil', query: { userId: item._id } }" class="text-primary">Ko'rish </NuxtLink>
             </UiTableCell>
             <UiTableCell class="flex items-center gap-2">
               <ModalPupilEdit :pupilId="item._id" @edit-pupil="handleUpdatePupil" />

@@ -1,8 +1,8 @@
 <template>
   <header id="header" class="sticky top-0 z-30 border-b bg-background/80 px-4 backdrop-blur">
     <div class="flex h-14 items-center justify-between">
-      <div class="hidden items-center gap-4 max-lg:flex">
-        <UiButton variant="outline" size="icon-sm">
+      <div class="hidden items-center gap-2 max-lg:flex">
+        <UiButton @click="openSheet = true" variant="outline" size="icon-sm" class="h-auto w-auto border-none p-0">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-muted-foreground">
             <path
               fill-rule="evenodd"
@@ -33,7 +33,151 @@
         <LayoutHeaderDarkModeToggle />
       </div>
     </div>
+    <div class="lg:hidden">
+      <UiSheet v-model:open="openSheet">
+        <UiSheetContent class="sm:max-w-none md:w-[350px]" side="left">
+          <template #content>
+            <UiScrollArea class="relative h-screen overflow-hidden py-6">
+              <NuxtLink to="/">
+                <span>
+                  <svg width="131" height="22" viewBox="0 0 116 20" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M6.18772 3.7284H0V0H16.8508V3.7284H10.6631V19.7731H6.18822L6.18772 3.7284ZM31.9892 12.2309C31.9892 12.2876 31.9612 12.6832 31.9062 13.4172H20.6629C20.8658 14.3591 21.3446 15.1027 22.0994 15.6491C22.8541 16.1949 23.7937 16.4679 24.9173 16.4679C25.6905 16.4679 26.3768 16.3498 26.9751 16.1147C27.5738 15.8791 28.1306 15.507 28.6465 14.9985L30.9391 17.5406C29.5391 19.1792 27.4954 19.998 24.8064 19.998C23.131 19.998 21.648 19.6637 20.359 18.9952C19.07 18.3267 18.0753 17.3991 17.3756 16.2128C16.6759 15.0261 16.3255 13.6799 16.3255 12.1737C16.3255 10.6854 16.6709 9.34376 17.3616 8.14832C18.0524 6.95236 19.001 6.02014 20.2071 5.35163C21.4131 4.68363 22.7621 4.34887 24.2541 4.34887C25.709 4.34887 27.026 4.66881 28.2041 5.30921C29.3832 5.94961 30.3083 6.86753 30.9806 8.06348C31.6529 9.25943 31.9892 10.6481 31.9892 12.2299V12.2309ZM24.2816 7.68322C23.3054 7.68322 22.4862 7.96535 21.823 8.53062C21.1602 9.09537 20.7549 9.86763 20.6079 10.8469H27.9277C27.7803 9.88654 27.3754 9.11888 26.7122 8.54492C26.0494 7.97046 25.2397 7.68322 24.2816 7.68322ZM39.8618 19.999C38.6278 19.999 37.4217 19.8436 36.2432 19.5329C35.0646 19.2221 34.1254 18.8316 33.4252 18.3609L34.8617 15.1968C35.5244 15.6297 36.3256 15.9833 37.2648 16.2563C38.2044 16.5292 39.1251 16.6662 40.0273 16.6662C41.8501 16.6662 42.7618 16.2046 42.7618 15.2821C42.7618 14.8492 42.5133 14.538 42.016 14.3499C41.5187 14.1613 40.7545 14.0018 39.7234 13.87C38.5078 13.6814 37.5042 13.4647 36.7125 13.2199C35.9208 12.9751 35.2345 12.5422 34.6542 11.9207C34.074 11.2992 33.7841 10.414 33.7841 9.26556C33.7841 8.30471 34.056 7.45324 34.5993 6.7096C35.1426 5.96545 35.9343 5.38639 36.9749 4.97189C38.0155 4.55791 39.2446 4.35092 40.6625 4.35092C41.7121 4.35092 42.7578 4.46897 43.7979 4.70407C44.8385 4.93969 45.6997 5.26423 46.3804 5.67873L44.9439 8.81427C43.6364 8.06092 42.2095 7.68476 40.6625 7.68476C39.7419 7.68476 39.0511 7.81662 38.5908 8.08034C38.1305 8.34407 37.9 8.68292 37.9 9.09741C37.9 9.56813 38.1489 9.89778 38.6458 10.0859C39.1431 10.2745 39.9353 10.4533 41.0214 10.6225C42.2369 10.83 43.2311 11.0508 44.0048 11.2864C44.778 11.5215 45.4503 11.9498 46.0211 12.5713C46.5918 13.1928 46.8772 14.0591 46.8772 15.1697C46.8772 16.1116 46.6008 16.9493 46.0485 17.6837C45.4963 18.4182 44.69 18.9875 43.6314 19.3928C42.5723 19.7976 41.3158 20 39.8608 20L39.8618 19.999ZM59.1157 19.0386C58.6924 19.3586 58.1721 19.5988 57.5553 19.7588C56.9385 19.9187 56.2893 19.9985 55.608 19.9985C53.8402 19.9985 52.4727 19.537 51.5055 18.6144C50.5384 17.6919 50.0556 16.336 50.0556 14.5467V8.30369H47.7624V4.91414H50.0556V1.21384H54.365V4.91414H58.0666V8.30369H54.365V14.4899C54.365 15.1303 54.5264 15.6246 54.8483 15.9731C55.1707 16.3217 55.6265 16.496 56.2158 16.496C56.897 16.496 57.4773 16.3074 57.9562 15.9307L59.1157 19.0386ZM76.0495 9.49095C77.1546 9.84872 78.0203 10.4467 78.646 11.2849C79.2723 12.1226 79.5857 13.1534 79.5857 14.378C79.5857 16.1106 78.9274 17.443 77.6104 18.3747C76.2934 19.307 74.3736 19.7731 71.8505 19.7731H61.8507V0H71.2982C73.6554 0 75.4652 0.461513 76.7268 1.38403C77.9883 2.30655 78.619 3.55872 78.619 5.14055C78.619 6.1014 78.3936 6.95799 77.9423 7.71134C77.491 8.46468 76.8597 9.05755 76.0495 9.49095ZM66.2986 3.44577V8.10692H70.7459C71.851 8.10692 72.6887 7.90913 73.2595 7.51355C73.8303 7.11796 74.1157 6.53378 74.1157 5.76204C74.1157 4.99029 73.8303 4.41071 73.2595 4.02484C72.6887 3.63897 71.8505 3.44577 70.7459 3.44577H66.2986ZM71.5192 16.3268C72.6977 16.3268 73.5864 16.129 74.1847 15.7334C74.7835 15.3378 75.0823 14.7261 75.0823 13.8976C75.0823 12.2595 73.8943 11.4403 71.5187 11.4403H66.2981V16.3273L71.5192 16.3268ZM89.7509 19.9985C88.1855 19.9985 86.7815 19.6642 85.5385 18.9957C84.2955 18.3272 83.3238 17.3996 82.6241 16.2133C81.9243 15.0266 81.574 13.6804 81.574 12.1742C81.574 10.6675 81.9238 9.32076 82.6241 8.13452C83.3238 6.94828 84.295 6.02065 85.5385 5.35214C86.7815 4.68414 88.1855 4.34938 89.7509 4.34938C91.3164 4.34938 92.7159 4.68363 93.9499 5.35214C95.184 6.02065 96.1506 6.94828 96.8503 8.13452C97.5501 9.32127 97.9005 10.6675 97.9005 12.1742C97.9005 13.6804 97.5506 15.0271 96.8503 16.2133C96.1506 17.3996 95.184 18.3272 93.9499 18.9957C92.7159 19.6637 91.3169 19.9985 89.7509 19.9985ZM89.7509 16.383C90.856 16.383 91.7627 16.0017 92.4714 15.2387C93.1807 14.4761 93.5351 13.4545 93.5351 12.1742C93.5351 10.8934 93.1807 9.87172 92.4714 9.10917C91.7627 8.34662 90.8555 7.96484 89.7509 7.96484C88.6459 7.96484 87.7342 8.34611 87.0165 9.10917C86.2982 9.87172 85.9394 10.8934 85.9394 12.1742C85.9394 13.4545 86.2982 14.4761 87.0165 15.2387C87.7347 16.0012 88.6464 16.383 89.7509 16.383ZM104.889 6.58132C105.405 5.84688 106.1 5.29132 106.975 4.91465C107.85 4.53798 108.858 4.34989 110 4.34989V8.41766C109.521 8.37984 109.199 8.36093 109.033 8.36093C107.799 8.36093 106.832 8.71409 106.132 9.42042C105.433 10.1262 105.083 11.1857 105.083 12.5984V19.7731H100.773V4.5763H104.889L104.889 6.58132Z"
+                      fill="currentColor"
+                    ></path>
+                    <path
+                      d="M113.158 20C113.885 20 114.482 19.7737 114.948 19.3206C115.416 18.8675 115.648 18.2605 115.648 17.5002C115.648 16.7395 115.415 16.1325 114.948 15.6794C114.482 15.2263 113.885 15 113.158 15C112.43 15 111.83 15.2263 111.357 15.6794C110.885 16.1325 110.648 16.7395 110.648 17.5002C110.648 18.2605 110.885 18.8675 111.357 19.3206C111.83 19.7737 112.43 20 113.158 20Z"
+                      fill="#14A800"
+                    ></path>
+                  </svg>
+                </span>
+              </NuxtLink>
+              <nav class="mt-6 flex flex-col gap-2">
+                <NuxtLink
+                  v-for="(item, index) in filteredMenuItems"
+                  :key="index"
+                  :to="item.route"
+                  class="transition-300 group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-muted [&.router-link-active>span]:text-primary [&.router-link-active]:bg-muted"
+                >
+                  <span :class="`${item.icon} text-xl !leading-5 group-hover:text-primary`"></span>
+                  {{ item.label }}
+                </NuxtLink>
+                <UiCollapsible v-if="userRole === 'school'" v-model:open="openReport">
+                  <div class="flex items-center justify-between space-x-4">
+                    <UiCollapsibleTrigger asChild>
+                      <div class="transition-300 group flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-muted">
+                        <span class="icon-file transition-300 text-xl !leading-5 group-hover:text-primary"></span>
+                        Hisobotlar
+                        <span class="ml-auto">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                            aria-hidden="true"
+                            role="img"
+                            class="icon h-4 w-4 transition duration-300"
+                            :class="{ 'rotate-180': openReport }"
+                            width="1em"
+                            height="1em"
+                            viewBox="0 0 24 24"
+                          >
+                            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m19 9l-7 6l-7-6"></path>
+                          </svg>
+                        </span>
+                      </div>
+                    </UiCollapsibleTrigger>
+                  </div>
+                  <UiCollapsibleContent class="pl-10">
+                    <NuxtLink to="/" class="transition-300 group flex items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-muted"> O'quvchilarga </NuxtLink>
+                    <NuxtLink to="/" class="transition-300 group flex items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-muted"> O'qituvchilarga </NuxtLink>
+                    <NuxtLink to="/" class="transition-300 group flex items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-muted"> Abiturientlarga </NuxtLink>
+                  </UiCollapsibleContent>
+                </UiCollapsible>
+                <UiCollapsible v-if="userRole === 'school'" v-model:open="openTest">
+                  <div class="flex items-center justify-between space-x-4">
+                    <UiCollapsibleTrigger asChild>
+                      <div class="transition-300 group flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-muted">
+                        <span class="icon-calculator transition-300 text-xl !leading-5 group-hover:text-primary"></span>
+                        Test ochish
+                        <span class="ml-auto">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                            aria-hidden="true"
+                            role="img"
+                            class="icon h-4 w-4 transition duration-300"
+                            :class="{ 'rotate-180': openTest }"
+                            width="1em"
+                            height="1em"
+                            viewBox="0 0 24 24"
+                          >
+                            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m19 9l-7 6l-7-6"></path>
+                          </svg>
+                        </span>
+                      </div>
+                    </UiCollapsibleTrigger>
+                  </div>
+                  <UiCollapsibleContent class="pl-10">
+                    <NuxtLink to="/reports/school/pupils" class="transition-300 group flex items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-muted"> O'quvchilarga </NuxtLink>
+                    <NuxtLink to="/reports/school/teachers" class="transition-300 group flex items-center gap-3 rounded-lg px-3 py-2 text-sm hover:bg-muted"> Abiturientlarga </NuxtLink>
+                  </UiCollapsibleContent>
+                </UiCollapsible>
+              </nav>
+            </UiScrollArea>
+          </template>
+        </UiSheetContent>
+      </UiSheet>
+    </div>
   </header>
 </template>
 
-<script setup></script>
+<script setup>
+  const userRole = useCookie("role");
+
+  const router = useRouter();
+
+  const openReport = ref(false);
+  const openTest = ref(false);
+
+  const openSheet = ref(false);
+
+  const links = [
+    {
+      route: "/",
+      label: "Asosiy sahifa",
+      icon: "icon-home",
+      roles: ["pupil", "teacher", "school"],
+    },
+    {
+      route: "/open-tests",
+      label: "Test ishlash",
+      icon: "icon-document",
+      roles: ["pupil", "teacher"],
+    },
+    {
+      route: "/test-attempt-results",
+      label: "Natijalar",
+      icon: "icon-chart",
+      roles: ["pupil", "teacher"],
+    },
+    {
+      route: "/reports",
+      label: "Hisobotlar",
+      icon: "icon-file",
+      roles: ["pupil", "teacher"],
+    },
+    {
+      route: "/management",
+      label: "Boshqaruv paneli",
+      icon: "icon-briefcase",
+      roles: ["school"],
+    },
+  ];
+  const filteredMenuItems = computed(() => links.filter((item) => item.roles?.includes(userRole.value)));
+
+  watch(
+    () => router.currentRoute.value,
+    () => {
+      openSheet.value = false;
+    }
+  );
+</script>

@@ -11,24 +11,24 @@
         </UiDialogHeader>
         <VForm @submit="handleSubmitForm" v-slot="{ errors }">
           <div class="flex flex-col gap-6 py-4">
-            <RadioGroup v-model="value" class="flex flex-col gap-4">
+            <UiRadioGroup v-model="value" class="flex flex-col gap-4">
               <div class="flex items-center space-x-2">
-                <RadioGroupItem id="r1" value="default" />
-                <Label for="r1">Savol tushunarsiz yoki noto'g'ri</Label>
+                <UiRadioGroupItem id="r1" value="default" />
+                <UiLabel for="r1">Savol tushunarsiz yoki noto'g'ri</UiLabel>
               </div>
               <div class="flex items-center space-x-2">
-                <RadioGroupItem id="r2" value="comfortable" />
-                <Label for="r2">Qiyinlik darajasi aniq emas</Label>
+                <UiRadioGroupItem id="r2" value="comfortable" />
+                <UiLabel for="r2">Qiyinlik darajasi aniq emas</UiLabel>
               </div>
               <div class="flex items-center space-x-2">
-                <RadioGroupItem id="other" value="other" />
-                <Label for="other">Boshqa</Label>
+                <UiRadioGroupItem id="other" value="other" />
+                <UiLabel for="other">Boshqa</UiLabel>
               </div>
-            </RadioGroup>
+            </UiRadioGroup>
             <div class="grid gap-2">
               <VField name="name" rules="required">
-                <Label for="name" class="text-sm">Matnli izoh</Label>
-                <Textarea id="name" type="text" placeholder="Matnli izoh" class="min-h-[180px]" />
+                <UiLabel for="name" class="text-sm">Matnli izoh</UiLabel>
+                <UiTextarea id="name" type="text" placeholder="Matnli izoh" class="min-h-[180px]" />
               </VField>
             </div>
             <UiDialogFooter class="!gap-4">
