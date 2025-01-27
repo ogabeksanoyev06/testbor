@@ -8,27 +8,20 @@ export default defineNuxtConfig({
     // layoutTransition: { name: "layout", mode: "out-in" },
 
     head: {
-      script: [{
-        src: "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.12/pdfmake.min.js",
-        defer: true
-      }, {
-        src: "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.12/vfs_fonts.min.js",
-        defer: true
-      }]
-    }
+      script: [
+        {
+          src: "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.12/pdfmake.min.js",
+          defer: true,
+        },
+        {
+          src: "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.12/vfs_fonts.min.js",
+          defer: true,
+        },
+      ],
+    },
   },
 
-  modules: [
-    "@nuxtjs/tailwindcss",
-    "@nuxtjs/color-mode",
-    "@vueuse/nuxt",
-    "@nuxt/icon",
-    "@nuxt/fonts",
-    "@samk-dev/nuxt-vcalendar",
-    "@nuxtjs/i18n",
-    "@pinia/nuxt",
-    "dayjs-nuxt",
-  ],
+  modules: ["@nuxtjs/tailwindcss", "@vueuse/nuxt", "@nuxt/icon", "@nuxt/fonts", "@samk-dev/nuxt-vcalendar", "@nuxtjs/i18n", "@pinia/nuxt", "dayjs-nuxt"],
 
   i18n: {
     types: "composition",
@@ -52,12 +45,6 @@ export default defineNuxtConfig({
   tailwindcss: {
     exposeConfig: true,
     editorSupport: true,
-  },
-
-  colorMode: {
-    classSuffix: "",
-    preference: "system",
-    fallback: "light",
   },
 
   imports: {

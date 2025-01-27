@@ -1,11 +1,10 @@
 <template>
-  <div class="grid gap-5 pb-10">
+  <div class="grid gap-5">
     <section class="">
-      <!-- {{ result.test_type_title }} -->
       <div class="flex flex-wrap items-center justify-center gap-6">
         <div class="relative w-full rounded-full border bg-background text-center" style="max-width: 250px; font-size: xx-large">
-          <span>{{ result.correct_answers }}</span>
-          <span style="font-size: large" class="text-primary">/{{ result.questions_count }}</span>
+          <span class="text-primary">{{ calculateTotalScore(allQuestions, results?.data?.test_type).totalScore }}</span>
+          <span style="font-size: large">/{{ calculateTotalScore(allQuestions, results?.data?.test_type).maxBall }}</span>
         </div>
         <div class="ms-2 w-full border border-primary bg-background text-center" style="max-width: 250px; font-size: xx-large">{{ timerFormat(duration) }}</div>
       </div>
@@ -74,7 +73,7 @@
         </UiTable>
       </div>
       <div v-if="result.test_type === 'attestation'">
-        <div class="mt-6 flex w-full flex-col items-center justify-center gap-2 border p-4 text-center">
+        <div class="mt-6 flex w-full flex-col items-center justify-center gap-2 border border-green-500 p-4 text-center" :class="{ '!border-red-500': result.correct_answers * 2 < 50 }">
           <!-- <p class="text-xl font-bold text-primary">Tashxis</p> -->
           <p class="text-green-500" :class="{ 'text-red-500': result.correct_answers * 2 < 50 }">
             {{ getDiagnosis(result?.comments?.toifa, result.correct_answers * 2) }}
@@ -101,23 +100,23 @@
               <UiTableCell class="border-r py-3">{{ calculateCorrectAnswers(test.questions) }} </UiTableCell>
               <UiTableCell class="border-r py-3">{{ calculateIncorrectAnswers(test.questions) }} </UiTableCell>
               <UiTableCell class="border-r py-3">{{ calculateUnselectedAnswers(test.questions) }} </UiTableCell>
-              <UiTableCell class="border-r py-3">36 </UiTableCell>
+              <UiTableCell class="border-r py-3">{{ test.ball * calculateCorrectAnswers(test.questions) }} </UiTableCell>
             </UiTableRow>
           </UiTableBody>
         </UiTable>
       </div>
     </section>
 
-    <div class="relative mt-6">
-      <h3 class="mb-4 font-semibold max-sm:text-center">
+    <div class="relative mx-auto mt-6 max-w-[900px]">
+      <h3 class="mb-4 text-center font-semibold sm:text-xl">
         Test variant raqami<strong class="text-primary"> №{{ result._id }}</strong>
       </h3>
-      <div class="flex flex-col gap-4 sm:gap-6">
+      <div class="flex flex-col items-center justify-center gap-4 text-center sm:gap-6">
         <div class="grid gap-2" v-for="(test, i) in result.results" :key="i">
-          <p class="text-base font-semibold max-sm:text-center">{{ test.science?.name_uz }}</p>
-          <div class="flex flex-wrap gap-2 max-sm:justify-center">
+          <p class="text-center text-base font-semibold">{{ test.science?.name_uz }}</p>
+          <div class="flex flex-wrap justify-center gap-2">
             <ModalTestQuestionInfoModal v-for="(question, index) in test.questions" :key="index" :question="question">
-              <UiButton class="h-[30px] w-[30px] shadow" :variant="isCorrect(question) ? 'default' : isSelectedIncorrect(question) ? 'destructive' : 'secondary'">
+              <UiButton class="h-[32px] w-[32px] shadow-inset" :variant="isCorrect(question) ? 'default' : isSelectedIncorrect(question) ? 'destructive' : 'secondary'">
                 {{ index + 1 }}
               </UiButton>
             </ModalTestQuestionInfoModal>
@@ -125,13 +124,26 @@
         </div>
       </div>
     </div>
-
-    <NuxtLink :to="localePath('/test-attempt-results')" class="mx-auto w-full max-w-[300px]">
-      <UiButton class="w-full"> Mening natijalarim </UiButton>
-    </NuxtLink>
-    <NuxtLink :to="localePath('/test-attempt-results')" class="mx-auto w-full max-w-[300px]" v-if="result.test_type === 'dtm'">
-      <UiButton class="w-full" variant="outline"> Solishtirish </UiButton>
-    </NuxtLink>
+    <div class="mt-5 flex flex-col justify-center gap-2 sm:flex-row sm:gap-4">
+      <NuxtLink :to="localePath('/test-attempt-results')" class="w-full sm:max-w-[200px]">
+        <UiButton class="w-full"> Mening natijalarim </UiButton>
+      </NuxtLink>
+      <NuxtLink
+        :to="{
+          path: localePath(`/compare/${route.params.id}`),
+          query: {
+            subjects: [results?.data.subject?._id, results?.data.subject_2?._id].join(','),
+          },
+        }"
+        class="w-full sm:max-w-[200px]"
+        v-if="result.test_type === 'dtm'"
+      >
+        <UiButton class="w-full !bg-foreground"> Solishtirish </UiButton>
+      </NuxtLink>
+      <NuxtLink :to="localePath('/reports')" class="w-full max-w-[200px]" v-else>
+        <UiButton class="w-full !bg-foreground"> Hisobot </UiButton>
+      </NuxtLink>
+    </div>
   </div>
 </template>
 
@@ -148,6 +160,8 @@
   const { user } = storeToRefs(profileStore);
 
   const { result } = storeToRefs(testStore);
+
+  const allQuestions = ref([]);
 
   const route = useRoute();
   const userRole = useCookie("role");
@@ -291,13 +305,11 @@
     return question.options.some((option) => option.is_selected && !option.is_correct);
   }
 
-  function isAnySelected(question) {
-    return question.options.some((option) => option.is_selected);
-  }
-
   const { data: results } = await useAsyncData("results", async () => {
     return await getResultById(userRole.value, route.params.id);
   });
+
+  allQuestions.value = [...results.value.data?.main_test, ...results.value.data?.third_test, ...results.value.data?.secondary_test];
 
   const duration = computed(() => {
     if (results.value) {

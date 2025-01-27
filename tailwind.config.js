@@ -7,9 +7,9 @@ module.exports = {
     extend: {
       container: {
         center: true,
-        padding: "1rem",
-        screens: {
-          "2xl": "1520px",
+        padding: {
+          DEFAULT: "1rem",
+          sm: "2rem",
         },
       },
       fontFamily: {
@@ -89,6 +89,9 @@ module.exports = {
         "collapse-down": "collapse-down 0.2s ease-out",
         "collapse-up": "collapse-up 0.2s ease-out",
         "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
+      },
+      boxShadow: {
+        inset: "inset 0 1px 4px 0 rgba(0,0,0,0.2)",
       },
       colors: {
         border: "hsl(var(--border))",

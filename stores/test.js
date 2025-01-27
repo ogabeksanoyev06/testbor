@@ -2,10 +2,6 @@ import { useApi } from "@/composables/useApi";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-
-
-
-
 export const useTestStore = defineStore("test", () => {
   const api = useApi();
 
@@ -37,7 +33,6 @@ export const useTestStore = defineStore("test", () => {
       throw error;
     }
   };
-
   const getTime = async () => {
     try {
       const response = await api.get("info/time");
@@ -49,7 +44,6 @@ export const useTestStore = defineStore("test", () => {
       throw error;
     }
   };
-
   const getTestTypes = async (role) => {
     try {
       const apiPath = userRoleApiPath[role] || userRoleApiPath.default;
@@ -60,7 +54,6 @@ export const useTestStore = defineStore("test", () => {
       throw error;
     }
   };
-
   const getTestTypeSubject = async (role, test_type_id) => {
     try {
       const apiPath = userRoleApiPath[role] || userRoleApiPath.default;
@@ -71,7 +64,6 @@ export const useTestStore = defineStore("test", () => {
       throw error;
     }
   };
-
   const startTest = async (role, test_type, test_type_id, subject_id, data) => {
     try {
       loading.start_test = true;
@@ -85,13 +77,13 @@ export const useTestStore = defineStore("test", () => {
       loading.start_test = false;
     }
   };
-
   const getActiveTest = async (role, test_type, test_id) => {
     try {
       loading.start_test = true;
       const apiPath = userRoleApiPath[role];
       const url = `${apiPath}/get-test/${test_type}/${test_id}`;
       const response = await api.post(url);
+
       if (response.data.status === "success") {
         const testData = response.data?.data;
         await getTime();
@@ -99,53 +91,60 @@ export const useTestStore = defineStore("test", () => {
         const duration = testData?.test_type_id?.duration;
         testTimer.value = Math.floor(startedAt + duration * 60 - times.value);
         let blogs = [];
-        if (testData?.main_test?.length > 0) {
-          if (testData?.test_type_id?.test_type === "dtm") {
-            if (testData?.third_test?.length > 0) {
-              const questions = testData.main_test;
-              blogs.push({
-                science: {
-                  name_uz: "Ona tili (majburiy)",
-                },
-                test_type: "main",
-                questions: questions.slice(0, 10),
-              });
-              blogs.push({
-                science: {
-                  name_uz: "Matematika (majburiy)",
-                },
-                test_type: "main",
-                questions: questions.slice(10, 20),
-              });
-              blogs.push({
-                science: {
-                  name_uz: "O'zbekiston tarixi (majburiy)",
-                },
-                test_type: "main",
-                questions: questions.slice(20, 30),
-              });
-            }
-          } else {
+        if (testData?.test_type_id?.test_type === "dtm") {
+          if (testData?.main_test?.length > 0) {
+            const questions = testData.main_test;
+            blogs.push({
+              science: {
+                name_uz: "Ona tili (majburiy)",
+              },
+              test_type: "main",
+              questions: questions.slice(0, 10),
+            });
+            blogs.push({
+              science: {
+                name_uz: "Matematika (majburiy)",
+              },
+              test_type: "main",
+              questions: questions.slice(10, 20),
+            });
+            blogs.push({
+              science: {
+                name_uz: "O'zbekiston tarixi (majburiy)",
+              },
+              test_type: "main",
+              questions: questions.slice(20, 30),
+            });
+          }
+          if (testData?.secondary_test?.length > 0) {
+            blogs.push({
+              science: testData?.subject,
+              test_type: "secondary",
+              questions: testData.secondary_test,
+            });
+          }
+          if (testData?.third_test?.length > 0) {
+            blogs.push({
+              science: testData?.subject_2,
+              test_type: "third",
+              questions: testData.third_test,
+            });
+          }
+        } else {
+          if (testData?.main_test?.length > 0) {
             blogs.push({
               science: testData?.subject,
               test_type: "main",
               questions: testData?.main_test,
             });
           }
-        }
-        if (testData?.secondary_test?.length > 0) {
-          blogs.push({
-            science: testData?.subject,
-            test_type: "secondary",
-            questions: testData.secondary_test,
-          });
-        }
-        if (testData?.third_test?.length > 0) {
-          blogs.push({
-            science: testData?.subject_2,
-            test_type: "third",
-            questions: testData.third_test,
-          });
+          if (testData?.secondary_test?.length > 0) {
+            blogs.push({
+              science: testData?.subject_2,
+              test_type: "secondary",
+              questions: testData.secondary_test,
+            });
+          }
         }
 
         tests.value = {
@@ -174,7 +173,6 @@ export const useTestStore = defineStore("test", () => {
       loading.start_test = false;
     }
   };
-
   const selectedQuestion = async (role, test_type, activeTestId, mainTestId, optionId, test_type_secondary) => {
     try {
       loading.is_selected = true;
@@ -206,7 +204,6 @@ export const useTestStore = defineStore("test", () => {
       loading.is_selected = false;
     }
   };
-
   const finishTest = async (role, test_type, activeTestId) => {
     try {
       loading.is_finished = true;
@@ -222,7 +219,6 @@ export const useTestStore = defineStore("test", () => {
   };
 
   // results
-
   const getResults = async (role, params) => {
     try {
       const apiPath = userRoleApiPath[role];
@@ -233,7 +229,6 @@ export const useTestStore = defineStore("test", () => {
       throw error;
     }
   };
-
   const getResultById = async (role, id) => {
     try {
       const apiPath = userRoleApiPath[role];
@@ -243,45 +238,74 @@ export const useTestStore = defineStore("test", () => {
 
       let results = [];
 
-      if (testData.secondary_test?.length > 0) {
-        results.push({
-          science: testData?.subject,
-          test_type: "secondary",
-          questions: testData?.secondary_test,
-        });
-      }
+      const points = {
+        teacher_intern: 2.5,
+        attestation: 2.0,
+        school: 1.0,
+        national_certificate: 2.0,
+      };
 
-      if (testData.third_test?.length > 0) {
-        results.push({
-          science: testData?.subject_2,
-          test_type: "thrid",
-          questions: testData.third_test,
-        });
-      }
-      if (testData.main_test?.length > 0) {
-        results.push({
-          science: {
-            name_uz: "Ona tili (majburiy)",
-          },
-          test_type: "main",
-          questions: testData.main_test.slice(0, 10),
-        });
-
-        results.push({
-          science: {
-            name_uz: "Matematika (majburiy)",
-          },
-          test_type: "main",
-          questions: testData.main_test.slice(10, 20),
-        });
-
-        results.push({
-          science: {
-            name_uz: "O'zbekiston tarixi (majburiy)",
-          },
-          test_type: "main",
-          questions: testData.main_test.slice(20, 30),
-        });
+      if (testData?.test_type_id?.test_type === "dtm") {
+        if (testData?.main_test?.length > 0) {
+          const questions = testData.main_test;
+          results.push({
+            science: {
+              name_uz: "Ona tili (majburiy)",
+            },
+            test_type: "main",
+            questions: questions.slice(0, 10),
+            ball: 1.1,
+          });
+          results.push({
+            science: {
+              name_uz: "Matematika (majburiy)",
+            },
+            test_type: "main",
+            questions: questions.slice(10, 20),
+            ball: 1.1,
+          });
+          results.push({
+            science: {
+              name_uz: "O'zbekiston tarixi (majburiy)",
+            },
+            test_type: "main",
+            questions: questions.slice(20, 30),
+            ball: 1.1,
+          });
+        }
+        if (testData?.secondary_test?.length > 0) {
+          results.push({
+            science: testData?.subject,
+            test_type: "secondary",
+            questions: testData.secondary_test,
+            ball: 3.1,
+          });
+        }
+        if (testData?.third_test?.length > 0) {
+          results.push({
+            science: testData?.subject_2,
+            test_type: "third",
+            questions: testData.third_test,
+            ball: 2.1,
+          });
+        }
+      } else {
+        if (testData?.main_test?.length > 0) {
+          results.push({
+            science: testData?.subject,
+            test_type: "main",
+            questions: testData?.main_test,
+            ball: points[testData?.test_type_id?.test_type],
+          });
+        }
+        if (testData?.secondary_test?.length > 0) {
+          results.push({
+            science: testData?.subject_2,
+            test_type: "secondary",
+            questions: testData.secondary_test,
+            ball: points[testData?.test_type_id?.test_type],
+          });
+        }
       }
       result.value = {
         _id: testData._id,
@@ -303,13 +327,11 @@ export const useTestStore = defineStore("test", () => {
         timeoutId: testData?.timeoutId,
         score: testData?.score,
       };
-
       return response.data;
     } catch (error) {
       throw error;
     }
   };
-
   const selectedAnswersCount = computed(() => {
     return (
       tests.value.blogs?.reduce((count, blog) => {
@@ -321,17 +343,14 @@ export const useTestStore = defineStore("test", () => {
       }, 0) || 0
     );
   });
-
   const unselectedAnswersCount = computed(() => {
     return totalQuestionsCount.value - selectedAnswersCount.value;
   });
-
   const totalQuestionsCount = computed(() => {
     return tests.value.questions_count || 0;
   });
 
   // reposts
-
   const getScienceReportResults = async (role, params) => {
     try {
       const apiPath = userRoleApiPath[role];
@@ -342,7 +361,6 @@ export const useTestStore = defineStore("test", () => {
       throw error;
     }
   };
-
   const getPartsReportResults = async (role, science_id) => {
     try {
       const apiPath = userRoleApiPath[role];
@@ -353,7 +371,6 @@ export const useTestStore = defineStore("test", () => {
       throw error;
     }
   };
-
   const getSubjectsReportResults = async (role, science_id, subject_id) => {
     try {
       const apiPath = userRoleApiPath[role];
@@ -364,6 +381,8 @@ export const useTestStore = defineStore("test", () => {
       throw error;
     }
   };
+
+  // ball
 
   return {
     getTestSchoolSubject,

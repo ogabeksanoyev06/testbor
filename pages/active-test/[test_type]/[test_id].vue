@@ -1,6 +1,6 @@
 <template>
   <div class="h-full flex-1">
-    <div class="sticky top-0 z-50 w-full py-2 lg:hidden">
+    <div class="sticky top-0 z-50 w-full bg-card py-2 lg:hidden">
       <div class="flex items-center justify-between gap-4">
         <div class="flex items-center gap-1">
           <span class="shrink-0">
@@ -31,8 +31,8 @@
     </div>
     <section class="relative grid gap-6 lg:grid-cols-[400px_minmax(0,1fr)]">
       <aside class="order-2 lg:order-1">
-        <div class="top-4 z-20 flex w-full flex-col gap-4 lg:sticky lg:h-[calc(100vh-10px)]">
-          <div class="hidden items-center gap-4 rounded-lg border border-dashed border-gray-200 px-4 py-3 lg:flex lg:justify-between">
+        <div class="top-4 z-20 flex w-full flex-col gap-4 lg:sticky lg:h-[calc(100vh-50px)]">
+          <div class="hidden items-center gap-4 rounded-sm border border-dashed border-gray-200 px-4 py-3 lg:flex lg:justify-between">
             <div class="flex items-center gap-1">
               <span class="shrink-0">
                 <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -58,8 +58,8 @@
               {{ timerFormat(testTimer) }}
             </span>
           </div>
-          <div class="relative flex flex-col gap-4 overflow-y-auto rounded-lg border border-dashed border-gray-200">
-            <div class="z-10 flex items-center justify-between border-b border-border/50 bg-white px-4 py-4 lg:sticky lg:top-0">
+          <div class="invisible-scroll relative flex flex-col gap-4 overflow-y-auto rounded-sm border border-dashed border-gray-200">
+            <div class="z-10 flex items-center justify-between border-b bg-white border-border/50 px-4 py-4 lg:sticky lg:top-0">
               <span class="text-base font-medium">Barcha testlar</span>
               <span class="text-sm font-medium opacity-50">{{ selectedAnswersCount }}/{{ totalQuestionsCount }}</span>
             </div>
@@ -70,9 +70,9 @@
                   <button
                     v-for="(question, index) in test.questions"
                     :key="question._id"
-                    class="transition-300 hover:shadow-box flex h-9 w-9 items-center justify-center rounded-xl border-2 border-transparent bg-gray-200 opacity-70 hover:border-gray-300/25 hover:opacity-100 hover:shadow-gray-200"
+                    class="transition-300 flex h-9 w-9 items-center justify-center rounded-sm border-transparent bg-gray-200 opacity-70 shadow-inset hover:border-gray-300/25 hover:opacity-100 hover:shadow-[inset_0_4px_8px_0_rgba(0,0,0,0.3)]"
                     :class="{
-                      '!shadow-box !border-2 !border-green-500 !bg-green-500/20 !opacity-100 !shadow-green-500': isSelected(question.options),
+                      '!bg-green-500/20 !opacity-100 !shadow-[inset_0_1px_4px_0_rgba(0,0,0,0.3)] !shadow-primary': isSelected(question.options),
                     }"
                     @click="scrollToQuestion(question._id)"
                   >
@@ -81,8 +81,8 @@
                 </div>
               </div>
             </div>
-            <div class="w-full border-t border-border/50 bg-white px-4 py-4 lg:sticky lg:bottom-0">
-              <div class="flex items-center gap-6">
+            <div class="w-full bg-white border-t border-border/50 px-4 py-4 lg:sticky lg:bottom-0">
+              <div class="flex items-center gap-4">
                 <div class="px-1">
                   <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0_1092_2540)">
@@ -94,11 +94,13 @@
                       <path d="M16 16L28 20L22.6667 22.6667L20 28L16 16Z" stroke="hsl(var(--primary))" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                     </g>
                     <defs>
-                      <clipPath id="clip0_1092_2540"><rect width="32" height="32" fill="white"></rect></clipPath>
+                      <clipPath id="clip0_1092_2540">
+                        <rect width="32" height="32" fill="white"></rect>
+                      </clipPath>
                     </defs>
                   </svg>
-                  <p class="mt-3 text-sm">Tanlangan javoblar</p>
-                  <strong class="mt-2 text-3xl font-semibold">{{ selectedAnswersCount }}</strong>
+                  <p class="mt-1 text-sm">Tanlangan javoblar</p>
+                  <strong class="text-3xl font-semibold">{{ selectedAnswersCount }}</strong>
                 </div>
                 <div class="h-24 w-px bg-accent"></div>
                 <div class="px-1">
@@ -120,11 +122,13 @@
                       ></path>
                     </g>
                     <defs>
-                      <clipPath id="clip0_1092_2548"><rect width="32" height="32" fill="white"></rect></clipPath>
+                      <clipPath id="clip0_1092_2548">
+                        <rect width="32" height="32" fill="white"></rect>
+                      </clipPath>
                     </defs>
                   </svg>
-                  <p class="mt-3 text-sm">Javoblar yo'q</p>
-                  <strong class="mt-2 text-3xl font-semibold">{{ unselectedAnswersCount }}</strong>
+                  <p class="mt-1 text-sm">Javoblar yo'q</p>
+                  <strong class="text-3xl font-semibold">{{ unselectedAnswersCount }}</strong>
                 </div>
               </div>
               <UiButton @click="finish" class="mt-4 h-11 w-full" :loading="loadingFinish">Testni yakunlash</UiButton>
@@ -132,13 +136,15 @@
           </div>
         </div>
       </aside>
-      <main class="order-1 flex flex-col gap-3 sm:gap-10 lg:order-2">
+      <main class="order-1 flex flex-col gap-3 sm:gap-5 lg:order-2">
         <template v-for="(test, i) in tests.blogs" :key="i">
-          <div class="top-4 z-20 flex w-full rounded-lg border border-dashed border-gray-200 bg-white p-2 sm:px-4 sm:py-3 lg:sticky">
-            <h2 class="text-base font-bold sm:text-2xl sm:font-semibold">{{ test?.science?.name_uz }}</h2>
+          <div class="top-4 z-20 flex w-full rounded-sm border border-dashed bg-white border-gray-200 p-2 sm:px-4 sm:py-3 lg:sticky">
+            <h2 class="text-base font-bold sm:text-2xl sm:font-semibold">
+              {{ test?.science?.name_uz }}
+            </h2>
           </div>
           <div class="relative w-full" v-for="(question, index) in test?.questions" :key="question._id" :id="'section-' + question._id">
-            <div class="pb-8 [&_p]:mt-4">
+            <div class="pb-5">
               <div class="flex items-center justify-between">
                 <h3 class="flex-1 text-base font-bold">{{ index + 1 }}. Mos keluvchi javobni tanlang.</h3>
                 <ModalTestCommentNotification>
@@ -180,7 +186,7 @@
                 <span class="loader" v-if="loading.is_selected && option._id === optionIds"></span>
               </li>
             </ul>
-            <div class="mt-11 border border-dashed"></div>
+            <div class="mt-5 border border-dashed"></div>
           </div>
         </template>
       </main>

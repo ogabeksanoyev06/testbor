@@ -1,7 +1,7 @@
 <template>
   <div class="grid gap-6">
     <section class="">
-      <div class="flex items-center justify-between">
+      <div class="flex gap-3 max-sm:flex-col items-center justify-between">
         <h1 class="text-lg font-semibold md:text-2xl">Sinflar ro'yxati</h1>
         <ModalClassAdd @add-class="handleAddClass" />
       </div>
@@ -20,15 +20,28 @@
           </UiTableRow>
         </UiTableHeader>
         <UiTableBody>
-          <UiTableRow v-for="(item, i) in sortedClasses" :key="i" class="whitespace-nowrap odd:bg-muted">
+          <UiTableRow
+            v-for="(item, i) in sortedClasses"
+            :key="i"
+            class="whitespace-nowrap odd:bg-muted"
+          >
             <UiTableCell class="font-medium">{{ i + 1 }} </UiTableCell>
             <UiTableCell>
-              <NuxtLink :to="`/management/school/classes/${item._id}`" class="cursor-pointer text-primary"> {{ item.number }}{{ item.letter }} </NuxtLink>
+              <NuxtLink
+                :to="`/management/school/classes/${item._id}`"
+                class="cursor-pointer text-primary"
+              >
+                {{ item.number }}{{ item.letter }}
+              </NuxtLink>
             </UiTableCell>
             <UiTableCell class=""> {{ item.pupils }} </UiTableCell>
-            <UiTableCell>{{ $dayjs(item.school?.createdAt).format("DD.MM.YYYY HH:mm:ss") }} </UiTableCell>
+            <UiTableCell
+              >{{ $dayjs(item.school?.createdAt).format("DD.MM.YYYY HH:mm:ss") }}
+            </UiTableCell>
             <UiTableCell>
-              <span class="rounded-lg bg-primary px-2 py-[2px] font-normal text-white">{{ $dayjs(item.tarif).format("DD.MM.YYYY | HH:mm:ss") }}</span>
+              <span class="rounded-lg bg-primary px-2 py-[2px] font-normal text-white">{{
+                $dayjs(item.tarif).format("DD.MM.YYYY | HH:mm:ss")
+              }}</span>
             </UiTableCell>
             <UiTableCell class="flex gap-2">
               <ModalClassEdit :classId="item._id" @edit-class="handleUpdateClass" />
@@ -42,34 +55,34 @@
 </template>
 
 <script setup>
-  import { useClassStore } from "@/stores/class.js";
+import { useClassStore } from "@/stores/class.js";
 
-  const classStore = useClassStore();
+const classStore = useClassStore();
 
-  const { getClasses } = classStore;
+const { getClasses } = classStore;
 
-  const handleAddClass = async () => {
-    await refresh();
-  };
+const handleAddClass = async () => {
+  await refresh();
+};
 
-  const handleDeleteClass = async () => {
-    await refresh();
-  };
+const handleDeleteClass = async () => {
+  await refresh();
+};
 
-  const handleUpdateClass = async () => {
-    await refresh();
-  };
+const handleUpdateClass = async () => {
+  await refresh();
+};
 
-  const sortedClasses = computed(() => {
-    if (!classes.value?.data) return [];
-    return classes.value.data.slice().sort((a, b) => {
-      const numberA = Number(a.number) || 0;
-      const numberB = Number(b.number) || 0;
-      return numberA - numberB;
-    });
+const sortedClasses = computed(() => {
+  if (!classes.value?.data) return [];
+  return classes.value.data.slice().sort((a, b) => {
+    const numberA = Number(a.number) || 0;
+    const numberB = Number(b.number) || 0;
+    return numberA - numberB;
   });
+});
 
-  const { data: classes, refresh } = await useAsyncData("classes", async () => {
-    return await getClasses();
-  });
+const { data: classes, refresh } = await useAsyncData("classes", async () => {
+  return await getClasses();
+});
 </script>

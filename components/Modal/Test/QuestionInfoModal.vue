@@ -7,7 +7,7 @@
       <UiDialogContent class="sm:max-w-[900px]">
         <div class="mt-6 grid gap-4">
           <div class="flex items-center justify-between">
-            <h3 class="flex-1 text-base font-semibold" v-katex:auto>{{ question?.question_text }}</h3>
+            <h3 class="flex-1 text-base font-semibold" v-katex:auto v-html="question?.question_text" />
             <ModalTestCommentNotification>
               <UiButton class="h-auto border-none p-0" variant="outline">
                 <svg
@@ -41,7 +41,7 @@
             >
               <div class="flex flex-1 items-center gap-1">
                 <span class="font-bold">{{ answerLabels[i] }}.</span>
-                {{ option.text }}
+                <span v-html="option.text"></span>
               </div>
             </li>
           </ul>

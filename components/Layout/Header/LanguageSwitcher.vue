@@ -1,7 +1,7 @@
 <template>
   <UiDropdownMenu v-model:open="open">
     <UiDropdownMenuTrigger as-child>
-      <UiButton variant="ghost" size="sm" class="max-sm:gap-1 max-sm:px-2">
+      <UiButton variant="ghost" size="sm" class="max-sm:gap-1 max-sm:px-0">
         <img :src="currentLanguage.flag" class="h-5 w-5 flex-shrink-0 rounded-full" />
         <div class="flex items-center gap-0.5">
           <span class="text-sm capitalize max-sm:hidden">{{ currentLanguage.name }}</span>

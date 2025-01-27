@@ -2,7 +2,6 @@
   <ClientOnly>
     <VDatePicker
       :trim-weeks="props.trimWeeks || true"
-      :is-dark="$colorMode.value == 'dark'"
       v-bind="$attrs"
     >
       <template v-for="(_, slot) in $slots" #[slot]="scope">

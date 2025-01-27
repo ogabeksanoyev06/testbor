@@ -15,7 +15,7 @@
           </UiTableRow>
         </UiTableHeader>
         <UiTableBody>
-          <UiTableRow v-for="(item, i) in data?.data" :key="i" class="odd:bg-muted">
+          <UiTableRow v-for="(item, i) in sciences?.data" :key="i" class="odd:bg-muted">
             <UiTableCell class="font-medium">{{ i + 1 }} </UiTableCell>
             <UiTableCell class="font-medium">
               <NuxtLink class="text-primary" :to="localePath(`/reports/${route.params.testId}/${route.params.scienceId}/${item.part?._id}`)">{{ item.part?.name_uz }}</NuxtLink>
@@ -42,7 +42,7 @@
 
   const { getPartsReportResults } = testStore;
 
-  const { data } = await useAsyncData("SubjectsReportResults", async () => {
+  const { data: sciences } = await useAsyncData("SubjectsReportResults", async () => {
     return await getPartsReportResults(userRole.value, route.params.scienceId);
   });
 </script>

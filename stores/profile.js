@@ -1,7 +1,11 @@
-import { defineStore } from 'pinia'
-import { useApi } from '@/composables/useApi'
-import { ref } from 'vue'
-import dayjs from 'dayjs'
+import { useApi } from '@/composables/useApi';
+import dayjs from 'dayjs';
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
+
+
+
+
 
 export const useProfileStore = defineStore('profile', () => {
   const api = useApi()
@@ -132,6 +136,8 @@ export const useProfileStore = defineStore('profile', () => {
         user.value.tariff = schoolData.tarif ? dayjs(schoolData.tarif).format('DD.MM.YYYY HH:mm:ss') : ''
         if (userRole.value === 'pupil') {
           user.value.class = `${data.class?.number || ''}${data.class?.letter || ''}`.trim() || ''
+          user.value.classNumber = `${data.class?.number || ""}`.trim() || ''
+
         }
       }
     }

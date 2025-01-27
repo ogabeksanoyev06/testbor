@@ -9,7 +9,7 @@
         </div>
         <h1 class="text-3xl font-bold leading-normal lg:text-5xl">Maktab o'quvchilari, o'qituvchilar uchun innovatsion test platformasi</h1>
         <p class="text-lg font-medium leading-normal text-muted-foreground lg:text-xl">
-          Testbor — maktab o'quvchilari bilimini sinash, o'qituvchilarga test yaratish imkoniyatini berish va adminlar uchun boshqaruv qulayligini ta'minlaydigan zamonaviy platforma. Testlarni tez va
+          Ta'limPro — maktab o'quvchilari bilimini sinash, o'qituvchilarga test yaratish imkoniyatini berish va adminlar uchun boshqaruv qulayligini ta'minlaydigan zamonaviy platforma. Testlarni tez va
           oson yaratish, yechish va tahlil qilish imkoniyatiga ega bo'ling. Ta'lim jarayonini raqamli davrga olib chiqing!",
         </p>
         <div class="flex items-center justify-center gap-x-2 lg:justify-start lg:gap-x-3">
@@ -51,3 +51,17 @@
     description: "O‘z bilimlaringizni mustahkamlash va yangi yutuqlarga erishish uchun zamonaviy taʼlim platformasi. Kelajakdagi muvaffaqiyatga tayyorlaning!",
   });
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

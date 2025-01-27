@@ -256,3 +256,46 @@ export const fillUserData = (userData, id, byrole) => {
     }
   }
 };
+
+export const calculateTotalScore = (questions, type) => {
+  let totalScore = 0;
+  let counter = 0;
+
+  const points = {
+    teacher_intern: { point: 2, maxBall: 100 },
+    attestation: { point: 2, maxBall: 100 },
+    school: { point: 1, maxBall: 30 },
+    national_certificate: { point: 2, maxBall: 90 },
+  };
+
+  const getDTMPoints = () => {
+    if (counter < 30) return 1.1;
+    if (counter < 60) return 2.1;
+    if (counter < 90) return 3.1;
+    return 0;
+  };
+
+  if (type === "dtm") {
+    questions.forEach((question) => {
+      const hasCorrectAnswer = question.options.some((option) => option.is_correct && option.is_selected);
+      if (hasCorrectAnswer) {
+        totalScore += getDTMPoints();
+      }
+      counter++;
+    });
+  } else {
+    const point = points[type]?.point || 0;
+    questions.forEach((question) => {
+      question.options.forEach((option) => {
+        if (option.is_correct && option.is_selected) {
+          totalScore += point;
+        }
+      });
+    });
+  }
+
+  return {
+    totalScore: totalScore.toFixed(1),
+    maxBall: type === "dtm" ? 189 : points[type]?.maxBall || 0,
+  };
+};

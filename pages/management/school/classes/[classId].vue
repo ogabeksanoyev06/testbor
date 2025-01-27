@@ -1,7 +1,7 @@
 <template>
   <div class="grid gap-6">
     <section class="">
-      <div class="flex items-center justify-between">
+      <div class="flex items-center justify-between gap-3 max-sm:flex-col">
         <h1 class="text-lg font-semibold md:text-2xl">O'quvchilar ro'yxati</h1>
         <ModalPupilAdd @add-pupil="handleAddPupil" />
       </div>
@@ -36,10 +36,24 @@
             </UiTableCell>
             <UiTableCell>{{ $dayjs(item.createdAt).format("DD.MM.YYYY HH:mm:ss") }} </UiTableCell>
             <UiTableCell>
-              <NuxtLink :to="{ path: localePath('/management/profile/pupil'), query: { userId: item._id } }" class="text-primary">{{ item.login }} </NuxtLink>
+              <NuxtLink
+                :to="{
+                  path: localePath('/management/profile/pupil'),
+                  query: { userId: item._id },
+                }"
+                class="text-primary"
+                >{{ item.login }}
+              </NuxtLink>
             </UiTableCell>
             <UiTableCell class="">
-              <NuxtLink :to="{ path: '/management/test-attempt-results/pupil', query: { userId: item._id } }" class="text-primary">Ko'rish </NuxtLink>
+              <NuxtLink
+                :to="{
+                  path: '/management/test-attempt-results/pupil',
+                  query: { userId: item._id },
+                }"
+                class="text-primary"
+                >Ko'rish
+              </NuxtLink>
             </UiTableCell>
             <UiTableCell class="flex items-center gap-2">
               <ModalPupilEdit :pupilId="item._id" @edit-pupil="handleUpdatePupil" />

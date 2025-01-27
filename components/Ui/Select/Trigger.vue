@@ -1,5 +1,5 @@
 <template>
-  <SelectTrigger :class="styles({ class: props.class })" v-bind="forwarded">
+  <SelectTrigger :class="[styles({ class: props.class }), props.error ? '!border-destructive' : '']" v-bind="forwarded">
     <slot>
       <UiSelectValue :placeholder="placeholder" class="line-clamp-1" />
     </slot>
@@ -19,10 +19,11 @@
       icon?: string;
       /** Placeholder text */
       placeholder?: string;
+      error?: boolean;
     }
   >();
-  const forwarded = reactiveOmit(props, "class", "icon", "placeholder");
+  const forwarded = reactiveOmit(props, "class", "icon", "placeholder", "error");
   const styles = tv({
-    base: "line-clamp-1 flex h-10 w-full items-center justify-between truncate rounded-md border border-input bg-background px-3 py-2 text-sm outline-none placeholder:text-muted-foreground focus:border-primary focus:outline-none  disabled:cursor-not-allowed disabled:opacity-50 data-[placeholder]:text-muted-foreground",
+    base: "line-clamp-1 flex h-10 w-full items-center justify-between truncate rounded-md border border-input bg-background px-3 py-2 text-sm outline-none placeholder:text-muted-foreground focus:border-primary focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 data-[placeholder]:text-muted-foreground",
   });
 </script>

@@ -1,9 +1,10 @@
 <template>
-  <div class="container grid grid-cols-1 px-0 lg:grid-cols-[280px_minmax(0,1fr)]">
+  <div class="grid grid-cols-1 px-0 lg:grid-cols-[280px_minmax(0,1fr)]">
+    <!-- container -->
     <LayoutSidebar />
-    <main class="mx-auto w-full pb-5 md:max-w-2xl lg:max-w-full">
+    <main class="mx-auto w-full pb-5">
       <LayoutHeader />
-      <div class="p-4">
+      <div class="container p-3">
         <slot />
       </div>
       <LayoutFooter />
