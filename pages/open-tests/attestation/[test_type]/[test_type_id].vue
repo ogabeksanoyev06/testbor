@@ -1,7 +1,7 @@
 <template>
-  <div class="mx-auto mt-10 w-full rounded-lg bg-card p-4 shadow-md">
+  <div class="mx-auto  w-full rounded-lg bg-card p-4 shadow-md">
     <VForm @submit="handleSubmitForm" v-slot="{ errors }">
-      <div class="grid grid-cols-2 gap-4 sm:gap-6">
+      <div class="grid sm:grid-cols-2 gap-4 sm:gap-6">
         <div class="grid gap-2">
           <VField name="science" rules="required" v-model="form.science">
             <UiLabel>Fan</UiLabel>
