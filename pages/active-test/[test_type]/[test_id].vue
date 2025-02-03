@@ -59,7 +59,7 @@
             </span>
           </div>
           <div class="invisible-scroll relative flex flex-col gap-4 overflow-y-auto rounded-sm border border-dashed border-gray-200">
-            <div class="z-10 flex items-center justify-between border-b bg-white border-border/50 px-4 py-4 lg:sticky lg:top-0">
+            <div class="z-10 flex items-center justify-between border-b border-border/50 bg-white px-4 py-4 lg:sticky lg:top-0">
               <span class="text-base font-medium">Barcha testlar</span>
               <span class="text-sm font-medium opacity-50">{{ selectedAnswersCount }}/{{ totalQuestionsCount }}</span>
             </div>
@@ -72,7 +72,7 @@
                     :key="question._id"
                     class="transition-300 flex h-9 w-9 items-center justify-center rounded-sm border-transparent bg-gray-200 opacity-70 shadow-inset hover:border-gray-300/25 hover:opacity-100 hover:shadow-[inset_0_4px_8px_0_rgba(0,0,0,0.3)]"
                     :class="{
-                      '!bg-green-500/20 !opacity-100 !shadow-[inset_0_1px_4px_0_rgba(0,0,0,0.3)] !shadow-primary': isSelected(question.options),
+                      '!bg-blue-500/20 !opacity-100 !shadow-[inset_0_1px_4px_0_rgba(0,0,0,0.3)] !shadow-primary': isSelected(question.options),
                     }"
                     @click="scrollToQuestion(question._id)"
                   >
@@ -81,7 +81,7 @@
                 </div>
               </div>
             </div>
-            <div class="w-full bg-white border-t border-border/50 px-4 py-4 lg:sticky lg:bottom-0">
+            <div class="w-full border-t border-border/50 bg-white px-4 py-4 lg:sticky lg:bottom-0">
               <div class="flex items-center gap-4">
                 <div class="px-1">
                   <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -138,7 +138,7 @@
       </aside>
       <main class="order-1 flex flex-col gap-3 sm:gap-5 lg:order-2">
         <template v-for="(test, i) in tests.blogs" :key="i">
-          <div class="top-4 z-20 flex w-full rounded-sm border border-dashed bg-white border-gray-200 p-2 sm:px-4 sm:py-3 lg:sticky">
+          <div class="top-4 z-20 flex w-full rounded-sm border border-dashed border-gray-200 bg-white p-2 sm:px-4 sm:py-3 lg:sticky">
             <h2 class="text-base font-bold sm:text-2xl sm:font-semibold">
               {{ test?.science?.name_uz }}
             </h2>
@@ -169,7 +169,7 @@
                   </UiButton>
                 </ModalTestCommentNotification>
               </div>
-              <div v-katex:auto v-html="question.question_text" />
+              <div v-katex:auto v-html="question.question_text" class="font-medium" />
             </div>
             <ul class="grid grid-cols-1 gap-3">
               <li
